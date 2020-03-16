@@ -1,0 +1,128 @@
+# Essentials
+stow
+gvim # gvim instead of vim because it has +clipboard
+emacs
+bash-completion
+tree
+htop
+lsof
+bc
+curl
+wget
+zip
+unzip
+unrar
+reflector
+
+# Monitoring
+lm_sensors
+upower
+wireshark-qt
+vnstat
+rkhunter
+
+# Audio
+pulseaudio
+pulsemixer
+
+# Desktop
+xorg-apps
+xorg-server
+xorg-xinit
+rxvt-unicode
+lxqt-policykit
+i3-wm
+i3status
+dmenu
+slock
+nitrogen
+dunst
+compton
+terminus-font
+scrot
+parcellite
+clipmenu
+#xdotool
+
+# Network
+tor
+nyx
+#proxychains-ng
+#remmina
+#freerdp
+#x2goclient
+#x2goserver
+#sshfs
+dnsutils
+#dnsmasq
+httpie
+#conntrack-tools
+#bridge-utils
+nmap
+
+# Virtualization
+docker
+qemu
+libvirt
+virt-install
+virt-viewer
+spice-gtk
+virt-manager
+
+# Development
+git
+#clang
+#ctags
+#cscope
+cloc
+python3
+go
+
+# Other
+chromium
+lesspipe
+gparted
+openssh
+gsmartcontrol
+#redshift
+fzf
+#the_silver_searcher
+ranger
+highlight # Used by Ranger for code highlighting in previews
+thunar
+#tumbler # Generates thumbnails, used by Thunar for previews
+#gvfs-mtp
+#tmux
+#termite
+#tilda
+#ccze
+zathura
+zathura-djvu
+#zathura-pdf-poppler
+zathura-pdf-mupdf
+zathura-ps
+weechat
+#aria2
+#newsboat
+vimiv
+#sxiv
+#imagemagick
+#exiv2
+#fish
+#mpv # Media player required by the mps-youtube
+#mps-youtube
+firefox
+#luakit
+#w3m # Ranger uses w3mimgdisplay for image previews
+#qutebrowser
+#gnumeric # Comes with ssconvert utility that can convert xlsx to csv, etc.
+xclip # Used by xclip.el to make Emacs use the X clipboard
+#ttf-linux-libertine
+noto-fonts
+#ttf-liberation
+#at
+#conky
+#acpi # Used by conky for battery info
+
+# x240-specific
+xf86-video-intel

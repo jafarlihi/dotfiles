@@ -1,0 +1,5 @@
+[colors]
+background = rgba(0, 0, 0, 0.8)
+
+[options]
+font = xos4 Terminus 14px

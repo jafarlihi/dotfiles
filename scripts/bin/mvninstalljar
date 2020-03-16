@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ ! $# -eq 4 ]]; then
+    printf >&2 'usage: %s [path] [group] [artifact] [version]\n' "${0##*/}"
+    printf >&2 'example: %s ./some.jar com.some some 0.1.0\n' "${0##*/}"
+    exit 3
+fi
+
+mvn install:install-file -Dfile="$1" -DgroupId="$2" -DartifactId="$3" -Dversion="$4" -Dpackaging=jar
+exit 0
+

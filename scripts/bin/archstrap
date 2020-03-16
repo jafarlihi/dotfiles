@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+
+function ask {
+    read -p "${1}? [1/0] " -n 1 -r; echo
+    if [[ $REPLY == 1 ]]
+    then
+        eval $1
+    fi
+}
+
+PS3='Current environment?: '
+options=('Archiso' 'arch-chroot local Arch')
+select opt in "${options[@]}"
+do
+    case $opt in
+        'Archiso')
+            current_environment='live'
+            break
+            ;;
+        'arch-chroot local Arch')
+            current_environment='local'
+            break
+            ;;
+        *) echo "Invalid option $REPLY";;
+    esac
+done
+
+PS3='Disk encryption?: '
+options=('None' 'dm-crypt LUKS')
+select opt in "${options[@]}"
+do
+    case $opt in
+        'None')
+            encryption='none'
+            break
+            ;;
+        'dm-crypt LUKS')
+            encryption='luks'
+            break
+            ;;
+        *) echo "Invalid option $REPLY";;
+    esac
+done
+
+if [ "$current_environment" == 'live' ]; then
+    if [ "$encryption" == 'none' ]; then
+        echo 'Environment: "Archiso"; Encryption: "None"'
+
+        ask "ip link"
+        ask "wifi-menu"
+        ask "ping -c 3 archlinux.org"
+
+        ask "fdisk -l"
+        read -p "Device to fdisk edit? (e.g. /dev/sda): " disk_device
+        ask "fdisk $disk_device"
+        ask "fdisk -l"
+
+        read -p "Device to install base to? (e.g. /dev/sda1): " disk_device_num
+        ask "mkfs.ext4 $disk_device_num"
+        ask "mount $disk_device_num /mnt"
+
+        ask "vim /etc/pacman.d/mirrorlist"
+        ask "pacstrap /mnt linux linux-firmware base base-devel"
+        ask "genfstab -U /mnt >> /mnt/etc/fstab"
+
+        #ask "cp -R /tmp/dotfiles.tar.gz /mnt/root/dotfiles.tar.gz"
+
+        ask "arch-chroot /mnt"
+    elif [ "$encryption" == 'luks' ]; then
+        echo 'Environment: "Archiso"; Encryption: "dm-crypt LUKS"'
+
+        ask "ip link"
+        ask "wifi-menu"
+        ask "ping -c 3 archlinux.org"
+
+        ask "fdisk -l"
+        read -p "Device to fdisk edit? (e.g. /dev/sda): " disk_device
+        ask "fdisk $disk_device"
+        ask "fdisk -l"
+
+        read -p "Device to install base to? (e.g. /dev/sda2): " base_partition
+        ask "cryptsetup -y -v luksFormat --type luks2 $base_partition"
+        ask "cryptsetup open $base_partition cryptroot"
+        ask "mkfs.ext4 /dev/mapper/cryptroot"
+        ask "mount /dev/mapper/cryptroot /mnt"
+
+        ask "umount /mnt"
+        ask "cryptsetup close cryptroot"
+        ask "cryptsetup open $base_partition cryptroot"
+        ask "mount /dev/mapper/cryptroot /mnt"
+
+        read -p "Boot partition? (e.g. /dev/sda1): " boot_partition
+        ask "mkfs.ext4 $boot_partition"
+        ask "mkdir /mnt/boot"
+        ask "mount $boot_partition /mnt/boot"
+
+        ask "vim /etc/pacman.d/mirrorlist"
+        ask "pacstrap /mnt linux linux-firmware base base-devel"
+        ask "genfstab -U /mnt >> /mnt/etc/fstab"
+
+        #ask "cp -R /tmp/dotfiles.tar.gz /mnt/root/dotfiles.tar.gz"
+
+        ask "lsblk -no UUID $base_partition | tail -n1 > /mnt/root/base_partition_uuid"
+
+        ask "arch-chroot /mnt"
+    fi
+fi
+
+if [ "$current_environment" == 'local' ]; then
+    if [ "$encryption" == 'none' ]; then
+        echo 'Environment: "arch-chroot local Arch"; Encryption: "None"'
+
+        ask "ln -sf /usr/share/zoneinfo/GMT /etc/localtime"
+        ask "hwclock --systohc"
+
+        ask "echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen"
+        ask "locale-gen"
+        ask "touch /etc/locale.conf"
+        ask "echo 'LANG=en_US.UTF-8' >> /etc/locale.conf"
+
+        ask "timedatectl set-timezone Asia/Baku"
+
+        ask "touch /etc/hostname"
+        ask "echo 'hostname' >> /etc/hostname"
+        ask "echo '127.0.1.1	hostname.localdomain	hostname' >> /etc/hosts"
+
+        ask "echo 'blacklist pcspkr' > /etc/modprobe.d/nobeep.conf"
+
+        ask "pacman -S --needed iw wpa_supplicant dialog netctl nano"
+        ask "pacman -S --needed intel-ucode"
+        ask "pacman -S --needed sudo vim"
+        ask "pacman -S --needed stow dialog"
+
+        ask "passwd"
+        ask "useradd -m -G wheel -s /bin/bash user"
+        ask "passwd user"
+        ask "visudo"
+
+        ask "pacman -S grub"
+        read -p "Device to grub-install to? (e.g. /dev/sda): " grub_device
+        ask "grub-install --target=i386-pc $grub_device"
+        ask "grub-mkconfig -o /boot/grub/grub.cfg"
+    elif [ "$encryption" == 'luks' ]; then
+        echo 'Environment: "arch-chroot local Arch"; Encryption: "dm-crypt LUKS"'
+
+        ask "ln -sf /usr/share/zoneinfo/GMT /etc/localtime"
+        ask "hwclock --systohc"
+
+        ask "echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen"
+        ask "locale-gen"
+        ask "touch /etc/locale.conf"
+        ask "echo 'LANG=en_US.UTF-8' >> /etc/locale.conf"
+
+        ask "timedatectl set-timezone Asia/Baku"
+
+        ask "touch /etc/hostname"
+        ask "echo 'hostname' >> /etc/hostname"
+        ask "echo '127.0.1.1	hostname.localdomain	hostname' >> /etc/hosts"
+
+        ask "sed -i '/^HOOKS.*/cHOOKS=(base udev autodetect keyboard consolefont modconf block encrypt filesystems fsck)' /etc/mkinitcpio.conf"
+        ask "mkinitcpio -p linux"
+
+        ask "echo 'blacklist pcspkr' > /etc/modprobe.d/nobeep.conf"
+
+        ask "pacman -S --needed iw wpa_supplicant dialog netctl nano"
+        ask "pacman -S --needed intel-ucode"
+        ask "pacman -S --needed sudo vim"
+        ask "pacman -S --needed stow dialog"
+
+        ask "passwd"
+        ask "useradd -m -G wheel -s /bin/bash user"
+        ask "passwd user"
+        ask "visudo"
+
+        ask "pacman -S grub"
+        read -p "Device to grub-install to? (e.g. /dev/sda): " grub_device
+        ask "grub-install --target=i386-pc $grub_device"
+        partition_uuid=$(</root/base_partition_uuid)
+        ask "sed -i '/^GRUB_CMDLINE_LINUX=.*/cGRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${partition_uuid}:cryptroot root=/dev/mapper/cryptroot\"' /etc/default/grub"
+        ask "grub-mkconfig -o /boot/grub/grub.cfg"
+    fi
+fi
+
+exit 0
+

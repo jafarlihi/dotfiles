@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+function ask {
+    read -p "${1}? [1/0] " -n 1 -r; echo
+    if [[ $REPLY == 1 ]]
+    then
+        eval $1
+    fi
+}
+
+ask "ip link"
+ask "wifi-menu"
+ask "ping -c 3 archlinux.org"
+
+ask "timedatectl set-ntp true"
+
+ask "fdisk -l"
+read -p "Device to fdisk edit? (e.g. /dev/sda): " disk_device
+ask "fdisk $disk_device"
+ask "fdisk -l"
+
+read -p "Device to install base to? (e.g. /dev/sda1): " disk_device_num
+ask "mkfs.ext4 $disk_device_num"
+ask "mount $disk_device_num /mnt"
+
+ask "vim /etc/pacman.d/mirrorlist"
+
+ask "pacstrap /mnt linux linux-firmware base base-devel nano vim netctl dhcpcd dialog iw wpa_supplicant intel-ucode gvim grub bash bzip2 coreutils cryptsetup device-mapper diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs"
+
+ask "genfstab -U /mnt >> /mnt/etc/fstab"

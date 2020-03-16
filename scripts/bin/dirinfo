@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+echo "Directory count: `find $1 -type d | wc -l`"
+
+echo "File count: `find $1 -type f | wc -l`"
+
+echo 'Extension count:'
+find $1 -type f | grep -E '.*\.[a-zA-Z0-9]*$' | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n
+echo
+
+echo '30 last modified:'
+find $1 -type f -printf '%T@ [%TY-%Tm-%Td] %p\n' | sort -k1,1nr | head -30
+echo
+
+exit 0
+

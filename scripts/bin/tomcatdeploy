@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DEST=/usr/share/tomcat7/webapps
+USER=tomcat7
+GROUP=tomcat7
+
+[ "$#" -eq 1 ] || { echo >&2 "1 argument required, $# provided"; exit 3; }
+
+cp --verbose $1 $DEST
+chown $USER:$GROUP $DEST/`basename "$1"`
+chmod 755 $DEST/`basename "$1"`
+
+exit 0
+

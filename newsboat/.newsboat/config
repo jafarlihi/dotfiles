@@ -1,0 +1,4 @@
+browser "chromium %u"
+max-download-speed 50
+auto-reload yes
+reload-time 30

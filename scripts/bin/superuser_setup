@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+
+if [ "$EUID" -ne 0 ]; then
+    echo >&2 "Can't run as non-superuser"
+    exit 126
+fi
+
+command -v dialog >/dev/null 2>&1 || {
+    echo "dialog was not found"
+    pacman -S dialog || { echo >&2 "can't run without dialog"; exit 3; }
+}
+
+# 1st argument is a path to the file with the list of packages to install (e.g "./arch_packages")
+function install_packages {
+    local package_list=$(sed -e 's/\s*#.*$//' -e '/^\s*$/d' "$1")
+    pacman -S --needed $package_list
+}
+
+function install_default_firewall {
+    iptables -P INPUT DROP
+    iptables -P FORWARD DROP
+    iptables -P OUTPUT ACCEPT
+    iptables -N TCP
+    iptables -N UDP
+    iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    iptables -A INPUT -i lo -j ACCEPT
+    iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
+    iptables -A INPUT -p icmp -m icmp --icmp-type 8 -m conntrack --ctstate NEW -j ACCEPT
+    iptables -A INPUT -p udp -m conntrack --ctstate NEW -j UDP
+    iptables -A INPUT -p tcp --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j TCP
+    iptables -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+    iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
+    iptables -A INPUT -j REJECT --reject-with icmp-proto-unreachable
+
+    iptables-save -f /etc/iptables/iptables.rules
+
+    systemctl enable iptables
+    systemctl start iptables
+}
+
+function enable_ipv4_forwarding {
+    echo 'net.ipv4.ip_forward=1' > /etc/sysctl.d/70-ipv4_forward.conf
+    echo 'net.ipv4.conf.all.forwarding=1' >> /etc/sysctl.d/70-ipv4_forward.conf
+    sysctl --system
+}
+
+function disable_ipv6 {
+    echo 'net.ipv6.conf.all.disable_ipv6=1' > /etc/sysctl.d/40-ipv6_disable.conf
+    echo 'net.ipv6.conf.default.disable_ipv6=1' >> /etc/sysctl.d/40-ipv6_disable.conf
+    echo 'net.ipv6.conf.lo.disable_ipv6=1' >> /etc/sysctl.d/40-ipv6_disable.conf
+    sysctl --system
+}
+
+function enable_fstrim_timer {
+    systemctl enable fstrim.timer
+}
+
+# 1st argument is the desired swapfile size (e.g. "2G")
+function create_swapfile {
+    fallocate -l "$1" /swapfile && \
+    chmod 600 /swapfile && \
+    mkswap /swapfile && \
+    echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+}
+
+function hide_grub_menu {
+    printf '\nGRUB_FORCE_HIDDEN_MENU="true"' >> /etc/default/grub
+    cp ./static/31_hold_shift /etc/grub.d/
+    chmod a+x /etc/grub.d/31_hold_shift
+    grub-mkconfig -o /boot/grub/grub.cfg
+}
+
+function install_x240_trackpoint_udev_rules {
+    echo 'SUBSYSTEM=="serio", DRIVERS=="psmouse", ACTION=="change", ENV{SERIO_TYPE}=="05", ATTR{press_to_select}="1", ATTR{sensitivity}="196", ATTR{speed}="255", ATTR{inertia}="4"' > /etc/udev/rules.d/10-trackpoint.rules
+}
+
+function install_x240_libinput_config {
+    cat <<"DOCEND" > /etc/X11/xorg.conf.d/30-libinput.conf
+Section "InputClass"
+        Identifier "libinput pointer catchall"
+        MatchIsPointer "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput keyboard catchall"
+        MatchIsKeyboard "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Option "Tapping" "on"
+        Option "ScrollMethod" "edge"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput touchscreen catchall"
+        MatchIsTouchscreen "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput tablet catchall"
+        MatchIsTablet "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+DOCEND
+}
+
+cmd=(dialog --separate-output --checklist "Select options:" 30 70 20)
+options=(1 "Install packages" off
+2 "Set up default iptables firewall" off
+3 "Enable IPv4 forwarding" off
+4 "Disable IPv6 globally" off
+5 "Enable fstrim.timer" off
+6 "Create 2GB swapfile" off
+7 "Hide GRUB menu" off
+8 "Install x240 trackpoiunt udev rules" off
+9 "Install x240 libinput config" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            install_packages ./static/arch_packages
+            ;;
+        2)
+            install_default_firewall
+            ;;
+        3)
+            enable_ipv4_forwarding
+            ;;
+        4)
+            disable_ipv6
+            ;;
+        5)
+            enable_fstrim_timer
+            ;;
+        6)
+            create_swapfile 2G
+            ;;
+        7)
+            hide_grub_menu
+            ;;
+
+        8)
+            install_x240_trackpoint_udev_rules
+            ;;
+        9)
+            install_x240_libinput_config
+            ;;
+    esac
+done
+
+exit 0
+

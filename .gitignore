@@ -1,0 +1,11 @@
+### Vim
+vim/.vim/.netrwhist
+vim/.vim/autoload/
+vim/.vim/plugged/
+
+### Emacs
+*~
+auto-save-list
+tramp
+elpa
+

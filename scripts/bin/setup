@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+command -v dialog >/dev/null 2>&1 || {
+    echo "dialog was not found"
+    sudo pacman -S dialog || { echo >&2 "can't run without dialog"; exit 3; }
+}
+
+function install_vimplug {
+    curl -Lo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim +PlugInstall +PlugClean! +qall
+}
+
+function add_user_to_wireshark_group {
+    sudo gpasswd -a "$USER" wireshark
+}
+
+function enable_tor_controlport {
+    sudo sed -i 's/#ControlPort 9051/ControlPort 9051/g' /etc/tor/torrc
+}
+
+cmd=(dialog --separate-output --checklist "Select options:" 30 70 20)
+options=(1 "Install vimplug and run PlugInstall" off
+2 "Add user to wireshark group" off
+3 "Enable Tor ControlPort 9051 (no auth; required for nyx)" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            install_vimplug
+            ;;
+        2)
+            add_user_to_wireshark_group
+            ;;
+        3)
+            enable_tor_controlport
+            ;;
+    esac
+done
+
+exit 0
+

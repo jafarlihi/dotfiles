@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+read -p "General? " -n 1 -r
+echo
+if [[ $REPLY =~ ^1$ ]]
+then
+    xdg-open https://archlinux.org/news
+    xdg-open https://security.archlinux.org
+    xdg-open https://bbs.archlinux.org/viewforum.php?id=24
+    xdg-open https://lkml.org
+    xdg-open https://reddit.com/r/netsec
+    xdg-open https://hackerone.com/hacktivity
+    xdg-open https://twitter.com/cvenew
+    xdg-open https://news.ycombinator.com
+    xdg-open https://krebsonsecurity.com
+    xdg-open https://www.schneier.com
+    xdg-open https://www.exploit-db.com
+    xdg-open https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss.xml
+fi
+
+read -p "Vim packages? " -n 1 -r
+echo
+if [[ $REPLY =~ ^1$ ]]
+then
+    xdg-open https://github.com/junegunn/vim-plug
+    # Get the "Plug 'x/y'" from ~/dotfiles/vim/.vimrc and open github.com/x/y pages
+fi
+
+read -p "Emacs packages? " -n 1 -r
+echo
+if [[ $REPLY =~ ^1$ ]]
+then
+    # Get the package-install packages from ~/dotfiles/emacs/.emacs.d/init.el and open elpa/melpa pages
+fi
+

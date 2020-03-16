@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+function ask {
+    read -p "${1}? [1/0] " -n 1 -r; echo
+    if [[ $REPLY == 1 ]]
+    then
+        eval $1
+    fi
+}
+
+ask "ln -sf /usr/share/zoneinfo/GMT /etc/localtime"
+ask "hwclock --systohc"
+
+ask "echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen"
+ask "locale-gen"
+ask "touch /etc/locale.conf"
+ask "echo 'LANG=en_US.UTF-8' >> /etc/locale.conf"
+
+ask "timedatectl set-timezone Asia/Baku"
+ask "timedatectl set-ntp true"
+
+ask "touch /etc/hostname"
+ask "echo 'hostname' >> /etc/hostname"
+ask "echo '127.0.1.1	hostname.localdomain	hostname' >> /etc/hosts"
+
+ask "echo 'blacklist pcspkr' > /etc/modprobe.d/nobeep.conf"
+
+ask "passwd"
+ask "useradd -m -G wheel -s /bin/bash user"
+ask "passwd user"
+ask "visudo"
+
+read -p "Device to grub-install to? (e.g. /dev/sda): " grub_device
+ask "grub-install --target=i386-pc $grub_device"
+ask "grub-mkconfig -o /boot/grub/grub.cfg"
+

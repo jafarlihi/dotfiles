@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ ! $# -eq 4 ]]; then
+    printf >&2 'usage: %s [local_ip] [local_port] [remote_ip] [remote_port]\n' "${0##*/}"
+    printf >&2 'example: %s 192.168.111.2 1521 10.66.66.66 1521\n' "${0##*/}"
+    exit 3
+fi
+
+netsh interface portproxy delete v4tov4 listenport="$2" listenaddress="$1"
+netsh interface portproxy add v4tov4 listenport="$2" listenaddress="$1" connectport="$4" connectaddress="$3"
+exit 0
+

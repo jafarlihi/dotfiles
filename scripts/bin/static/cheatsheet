@@ -1,0 +1,18 @@
+# vim: ft=sh
+# Create qcow2
+sudo qemu-img create -f qcow2 archvm.qcow2 60G
+sudo chown nobody:kvm archvm.qcow2
+sudo chown nobody:kvm archlinux.iso
+
+# Create VM. os-variant types can be seen by running 'osinfo-query os'.
+sudo virt-install \
+    --name archVM \
+    --os-type=Linux \
+    --os-variant=archlinux \
+    --ram=3072 \
+    --vcpus sockets=1,cores=2,threads=2 \
+    --disk /home/user/vm/archvm.qcow2,format=qcow2,bus=virtio \
+    --graphics spice \
+    --cdrom /home/user/vm/archlinux.iso \
+    --network bridge:virbr10
+
