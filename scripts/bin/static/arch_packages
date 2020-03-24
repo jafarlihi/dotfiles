@@ -6,7 +6,6 @@ bash-completion
 tree
 htop
 lsof
-bc
 curl
 wget
 zip
@@ -109,6 +108,7 @@ vimiv
 #imagemagick
 #exiv2
 #fish
+#bc
 #mpv # Media player required by the mps-youtube
 #mps-youtube
 firefox
