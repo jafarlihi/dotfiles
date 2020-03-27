@@ -3,7 +3,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'easymotion/vim-easymotion'
 Plug 'fxn/vim-monochrome'
 Plug 'junegunn/fzf'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'majutsushi/tagbar'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " General settings
@@ -86,6 +87,9 @@ hi Normal guibg=NONE ctermbg=NONE
 
 " Open FZF with Ctrl-P
 nnoremap <C-p> :FZF<cr>
+
+" Open Tagbar with Ctrl-C
+nnoremap <C-c> :TagbarToggle<CR>
 
 " Define libclang location for clang_complete plugin
 "let g:clang_library_path='/usr/lib64/libclang.so'
