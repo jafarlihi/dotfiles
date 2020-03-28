@@ -88,7 +88,7 @@ alias p='pulsemixer'
 alias r='ranger'
 alias f='fish'
 alias sus='sudo systemctl suspend; slock'
-alias syu='sudo rkhunter --propupd && sudo pacman -Syu'
+alias syu='sudo pacman -Syu && sudo rkhunter --propupd'
 alias pacref='sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist'
 
 # Git aliases
