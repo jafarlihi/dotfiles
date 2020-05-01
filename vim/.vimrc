@@ -5,6 +5,7 @@ Plug 'fxn/vim-monochrome'
 Plug 'junegunn/fzf'
 Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'scrooloose/syntastic'
 call plug#end()
 
 " General settings
@@ -96,3 +97,5 @@ nnoremap <C-c> :TagbarToggle<CR>
 
 " Run :RustFmt on save automatically
 "let g:rustfmt_autosave = 1
+
+let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gofmt']
