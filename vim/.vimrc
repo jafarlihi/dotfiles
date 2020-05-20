@@ -6,6 +6,7 @@ Plug 'junegunn/fzf'
 Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'scrooloose/syntastic'
+Plug 'rip-rip/clang_complete'
 call plug#end()
 
 " General settings
@@ -70,7 +71,8 @@ autocmd BufNewFile,BufRead *.nasm set filetype=nasm
 autocmd BufNewFile,BufRead *.jad set filetype=java
 
 " Colorschemes
-let s:default_colorscheme = 'default'
+colorscheme koehler
+let s:default_colorscheme = 'koehler'
 let s:alternative_colorscheme = 'monochrome'
 execute "colorscheme ".s:default_colorscheme
 " Cycle colorschemes with F5
@@ -83,6 +85,8 @@ function! CycleColorschemes()
 endfunc
 nnoremap <F5> :call CycleColorschemes()<cr>
 
+highlight Pmenu ctermbg=grey guibg=grey
+
 " Make background transparent
 hi Normal guibg=NONE ctermbg=NONE
 
@@ -93,9 +97,11 @@ nnoremap <C-p> :FZF<cr>
 nnoremap <C-c> :TagbarToggle<CR>
 
 " Define libclang location for clang_complete plugin
-"let g:clang_library_path='/usr/lib64/libclang.so'
+let g:clang_library_path='/usr/lib64/libclang.so'
 
 " Run :RustFmt on save automatically
 "let g:rustfmt_autosave = 1
 
 let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gofmt']
+
+let g:syntastic_mode_map = {"mode": "active", "passive_filetypes": ["java"]}
