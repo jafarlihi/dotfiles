@@ -55,12 +55,13 @@ function enable_fstrim_timer {
     systemctl enable fstrim.timer
 }
 
-# 1st argument is the desired swapfile size (e.g. "2G")
+# 1st argument is the desired swapfile size in MB (e.g. "2048")
 function create_swapfile {
-    fallocate -l "$1" /swapfile && \
+    dd if=/dev/zero of=/swapfile count=$1 bs=1MiB
     chmod 600 /swapfile && \
     mkswap /swapfile && \
     echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+    swapon /swapfile
 }
 
 function hide_grub_menu {
@@ -146,7 +147,7 @@ do
             enable_fstrim_timer
             ;;
         6)
-            create_swapfile 2G
+            create_swapfile 2048
             ;;
         7)
             hide_grub_menu
