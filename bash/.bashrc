@@ -70,6 +70,7 @@ alias weather='curl wttr.in/Baku'
 alias magnet2torrent='aria2c -d ./ --bt-metadata-only=true --bt-save-metadata=true --listen-port=6881 `cat torrent.magnet`'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias cscoperec="find ./ -type f \( -name '*.c' -o -name '*.h' \) > ./cscope.files && cscope -b -q -k"
+alias fixpad="sudo modprobe psmouse -r; sudo modprobe psmouse"
 
 # ls aliases
 alias ls='ls --color=auto'
@@ -185,4 +186,10 @@ function cdls() {
 function calc() {
     awk "BEGIN {print $* }"
 }
+
+export PATH=$PATH:/home/user/opt/cross/bin
+
+# PB
+alias pbgp='sudo openconnect --protocol=gp gp.pashabank.az'
+alias pbgproute='sudo ip route del default dev tun0 & sudo ip route add 192.168.10.0/24 dev tun0 & sudo ip route add 192.168.106.0/24 dev tun0 & sudo ip route add 192.168.105.0/24 dev tun0 & sudo ip route add 192.168.110.0/24 dev tun0 & sudo ip route add 172.20.99.20/32 dev tun0'
 
