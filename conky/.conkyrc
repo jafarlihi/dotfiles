@@ -49,7 +49,7 @@ ${color grey}RAM Usage:$color $mem/$memmax
 ${color grey}Disk I/O:$color ${diskio}
 ${color grey}Swap Usage:$color $swap/$swapmax
 ${color grey}Disk Usage:$color ${fs_used /}/${fs_size /}
-${color grey}wlp3s0:$color ${color grey}Up:$color ${upspeed wlp3s0} ${color grey}-$color ${color grey}Down:$color ${downspeed wlp3s0}
+${color grey}wlan0:$color ${color grey}Up:$color ${upspeed wlan0} ${color grey}-$color ${color grey}Down:$color ${downspeed wlan0}
 ${color grey}enp0s25:$color ${color grey}Up:$color ${upspeed enp0s25} ${color grey}-$color ${color grey}Down:$color ${downspeed enp0s25}
 $hr
 ${color grey}Name                PID    CPU%   MEM%${color}
