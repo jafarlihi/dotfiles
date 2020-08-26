@@ -7,6 +7,10 @@ set -o vi
 # Start with working directory at home
 cd ~
 
+# History size
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+
 # Prompts
 # Shows Git branch and current Git email from .gitconfig
 function get_git_prompt {
