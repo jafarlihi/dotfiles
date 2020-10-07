@@ -268,7 +268,7 @@ bindsym $mod+O workspace prev
 bindsym $mod+P workspace next
 
 # Additional processes
-exec --no-startup-id compton
+exec --no-startup-id picom
 exec --no-startup-id feh --bg-fill ~/.config/i3/one-black-pixel.png
 exec --no-startup-id unclutter
 exec --no-startup-id parcellite
@@ -276,6 +276,6 @@ exec --no-startup-id clipmenud
 exec --no-startup-id lxqt-policykit-agent
 exec --no-startup-id dunst
 exec --no-startup-id xautolock -time 5 -locker 'slock'
-#exec --no-startup-id conky
+exec --no-startup-id conky
 #exec --no-startup-id emacs --daemon
 #exec --no-startup-id tilda

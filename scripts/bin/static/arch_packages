@@ -12,6 +12,7 @@ zip
 unzip
 unrar
 reflector
+iwd
 
 # Monitoring
 lm_sensors
@@ -36,7 +37,7 @@ dmenu
 slock
 feh
 dunst
-compton
+picom
 terminus-font
 scrot
 parcellite
