@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+shopt -s extglob
+
 # Vi mode
 set -o vi
 
@@ -109,7 +111,6 @@ alias gitpersonal='git config --global user.email jafarlihi'$(echo_at)'g''m''a''
 alias gitcensor='git config --global user.email email@gmail.com && git config --global user.name "Name Surname" && git config --global user.username username'
 
 # Network aliases
-alias wifi='sudo wifi-menu'
 alias fw='sudo iptables -vL -t filter'
 alias fwnat='sudo iptables -vL -t nat'
 alias conn='watch ss -atun'

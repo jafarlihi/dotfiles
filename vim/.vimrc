@@ -1,13 +1,13 @@
 " https://github.com/junegunn/vim-plug
-call plug#begin('~/.vim/plugged')
-Plug 'easymotion/vim-easymotion'
-Plug 'fxn/vim-monochrome'
-Plug 'junegunn/fzf'
-Plug 'majutsushi/tagbar'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'scrooloose/syntastic'
-Plug 'rip-rip/clang_complete'
-call plug#end()
+"call plug#begin('~/.vim/plugged')
+"Plug 'easymotion/vim-easymotion'
+"Plug 'fxn/vim-monochrome'
+"Plug 'junegunn/fzf'
+"Plug 'majutsushi/tagbar'
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'scrooloose/syntastic'
+"Plug 'rip-rip/clang_complete'
+"call plug#end()
 
 " General settings
 set nocompatible
@@ -51,10 +51,10 @@ filetype plugin indent on
 runtime! macros/matchit.vim
 
 " Make navigation between splits easier
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+"nnoremap <C-h> <C-w>h
+"nnoremap <C-j> <C-w>j
+"nnoremap <C-k> <C-w>k
+"nnoremap <C-l> <C-w>l
 
 " Toggle relative line numbering with Ctrl-B
 function! RelativeNumberingToggle()
@@ -67,8 +67,8 @@ endfunc
 nnoremap <C-b> :call RelativeNumberingToggle()<cr>
 
 " File extension to filetype associations
-autocmd BufNewFile,BufRead *.nasm set filetype=nasm
-autocmd BufNewFile,BufRead *.jad set filetype=java
+"autocmd BufNewFile,BufRead *.nasm set filetype=nasm
+"autocmd BufNewFile,BufRead *.jad set filetype=java
 
 " Colorschemes
 colorscheme koehler
@@ -94,14 +94,14 @@ hi Normal guibg=NONE ctermbg=NONE
 nnoremap <C-p> :FZF<cr>
 
 " Open Tagbar with Ctrl-C
-nnoremap <C-c> :TagbarToggle<CR>
+"nnoremap <C-c> :TagbarToggle<CR>
 
 " Define libclang location for clang_complete plugin
-let g:clang_library_path='/usr/lib64/libclang.so'
+"let g:clang_library_path='/usr/lib64/libclang.so'
 
 " Run :RustFmt on save automatically
 "let g:rustfmt_autosave = 1
 
-let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gofmt']
+"let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck', 'gofmt']
 
-let g:syntastic_mode_map = {"mode": "active", "passive_filetypes": ["java"]}
+"let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java']}
