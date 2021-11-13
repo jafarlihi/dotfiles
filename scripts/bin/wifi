@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+iwctl station wlan0 scan
+iwctl --passphrase [Password here] station wlan0 connect [SSID here]
+dhcpcd
