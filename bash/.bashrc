@@ -194,7 +194,4 @@ function calc() {
 
 export PATH=$PATH:/home/user/opt/cross/bin
 
-# PB
-alias pbgp='sudo openconnect --protocol=gp gp.pashabank.az'
-alias pbgproute='sudo ip route del default dev tun0 & sudo ip route add 192.168.10.0/24 dev tun0 & sudo ip route add 192.168.106.0/24 dev tun0 & sudo ip route add 192.168.105.0/24 dev tun0 & sudo ip route add 192.168.110.0/24 dev tun0 & sudo ip route add 172.20.99.20/32 dev tun0'
-
+export TERM=xterm
