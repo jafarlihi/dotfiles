@@ -195,3 +195,5 @@ function calc() {
 export PATH=$PATH:/home/user/opt/cross/bin
 
 export TERM=xterm
+
+source /usr/share/nvm/init-nvm.sh
