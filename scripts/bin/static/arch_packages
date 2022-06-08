@@ -1,7 +1,7 @@
 # Essentials
 stow
 gvim # gvim instead of vim because it has +clipboard
-emacs
+#emacs
 bash-completion
 tree
 htop
@@ -17,9 +17,9 @@ iwd
 # Monitoring
 lm_sensors
 upower
-wireshark-qt
-vnstat
-rkhunter
+#wireshark-qt
+#vnstat
+#rkhunter
 
 # Audio
 pulseaudio
@@ -42,12 +42,13 @@ terminus-font
 scrot
 parcellite
 clipmenu
+guake
 xautolock
 #xdotool
 
 # Network
-tor
-nyx
+#tor
+#nyx
 #proxychains-ng
 #remmina
 #freerdp
@@ -63,12 +64,12 @@ nmap
 
 # Virtualization
 docker
-qemu
-libvirt
-virt-install
-virt-viewer
-spice-gtk
-virt-manager
+#qemu
+#libvirt
+#virt-install
+#virt-viewer
+#spice-gtk
+#virt-manager
 
 # Development
 git
@@ -76,8 +77,8 @@ git
 #ctags
 #cscope
 cloc
-python3
-go
+#python3
+#go
 
 # Other
 chromium
@@ -114,7 +115,7 @@ vimiv
 #bc
 #mpv # Media player required by the mps-youtube
 #mps-youtube
-firefox
+#firefox
 #luakit
 #w3m # Ranger uses w3mimgdisplay for image previews
 #qutebrowser
