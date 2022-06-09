@@ -263,7 +263,7 @@ for_window [class="Tilda"] border none
 bindsym $mod+z exec bash -c 'sleep 0.1 && slock'
 
 bindsym $mod+backslash exec chromium
-bindsym grave exec guake-toggle
+bindsym $mod2+grave exec guake-toggle
 
 bindsym $mod+O workspace prev
 bindsym $mod+P workspace next
