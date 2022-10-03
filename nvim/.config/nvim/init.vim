@@ -40,5 +40,5 @@ filetype plugin indent on
 " Open FZF with Ctrl-P
 nnoremap <C-p> :FZF<cr>
 
-lua require('plugins')
+"lua require('plugins')
 

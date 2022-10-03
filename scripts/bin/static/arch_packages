@@ -1,6 +1,6 @@
 # Essentials
 stow
-gvim # gvim instead of vim because it has +clipboard
+#gvim # gvim instead of vim because it has +clipboard
 #emacs
 bash-completion
 tree
@@ -13,6 +13,9 @@ unzip
 unrar
 reflector
 iwd
+neovim
+dialog
+git
 
 # Monitoring
 lm_sensors
@@ -42,10 +45,11 @@ terminus-font
 scrot
 parcellite
 clipmenu
-guake
-cool-retro-term
+#guake
+#cool-retro-term
 xautolock
 #xdotool
+alacritty
 
 # Network
 #tor
@@ -64,16 +68,15 @@ httpie
 nmap
 
 # Virtualization
-docker
-#qemu
-#libvirt
-#virt-install
-#virt-viewer
-#spice-gtk
-#virt-manager
+#docker
+qemu
+libvirt
+virt-install
+virt-viewer
+spice-gtk
+virt-manager
 
 # Development
-git
 #clang
 #ctags
 #cscope
@@ -87,7 +90,7 @@ lesspipe
 gparted
 dosfstools
 openssh
-gsmartcontrol
+#gsmartcontrol
 #redshift
 fzf
 #the_silver_searcher
@@ -130,4 +133,4 @@ noto-fonts
 #acpi # Used by conky for battery info
 
 # x240-specific
-xf86-video-intel
+#xf86-video-intel
