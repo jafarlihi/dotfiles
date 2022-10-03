@@ -75,6 +75,7 @@ virt-install
 virt-viewer
 spice-gtk
 virt-manager
+bridge-utils
 
 # Development
 #clang
