@@ -197,3 +197,7 @@ export PATH=$PATH:/home/user/opt/cross/bin
 export TERM=xterm
 
 #source /usr/share/nvm/init-nvm.sh
+
+function binToHex() {
+    printf '%x\n' "$((2#$1))"
+}
