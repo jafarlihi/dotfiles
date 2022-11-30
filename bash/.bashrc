@@ -3,6 +3,8 @@
 
 shopt -s extglob
 
+export TERMINAL=alacritty
+
 # Vi mode
 set -o vi
 
