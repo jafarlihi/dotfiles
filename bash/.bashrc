@@ -37,8 +37,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export PAGER=less
-export VISUAL=vim
-export EDITOR=vim
+export VISUAL=nvim
+export EDITOR=nvim
 
 # XDG defaults
 export BROWSER=chromium
@@ -68,9 +68,9 @@ alias watch='watch '
 
 # Notepads
 alias createnotepads='mkdir -p ~/private && touch ~/private/org && touch ~/private/note && touch ~/private/pad'
-alias org='vim ~/private/org'
-alias note='vim ~/private/note'
-alias pad='vim ~/private/pad'
+alias org='nvim ~/private/org'
+alias note='nvim ~/private/note'
+alias pad='nvim ~/private/pad'
 
 # Random utils
 alias todo='grep -r TODO *'
@@ -196,7 +196,7 @@ function calc() {
 
 export PATH=$PATH:/home/user/opt/cross/bin
 
-export TERM=xterm
+#export TERM=xterm
 
 #source /usr/share/nvm/init-nvm.sh
 
