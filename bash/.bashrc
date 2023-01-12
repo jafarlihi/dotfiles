@@ -203,3 +203,7 @@ export PATH=$PATH:/home/user/opt/cross/bin
 function binToHex() {
     printf '%x\n' "$((2#$1))"
 }
+
+#. /home/user/toolchains/env.bash
+
+export NO_AT_BRIDGE=1
