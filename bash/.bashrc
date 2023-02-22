@@ -97,6 +97,7 @@ alias p='pulsemixer'
 alias r='ranger'
 alias f='fish'
 alias sus='sudo systemctl suspend; slock'
+alias hib='sudo systemctl hibernate; slock'
 alias syu='sudo pacman -Syu && sudo rkhunter --propupd'
 alias pacref='sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist'
 
@@ -138,7 +139,7 @@ alias wd20='watch "dmesg | tail -n 20"'
 alias wj20='watch "journalctl | tail -n 20"'
 
 # Screen aliases
-alias brightness='sudo vim /sys/class/backlight/intel_backlight/brightness'
+alias brightness='sudo nvim /sys/class/backlight/intel_backlight/brightness'
 alias xhome='xrandr --output DP1 --auto --right-of eDP1'
 alias xvgaoff='xrandr --output DP-2 --off'
 alias xvgaon='xrandr --output DP-2 --auto'
