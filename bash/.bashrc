@@ -51,9 +51,6 @@ fi
 # Set up lesspipe
 export LESSOPEN="|lesspipe.sh %s"
 
-# Set up GOPATH
-export GOPATH="/home/user/go" && export PATH=$PATH:$GOPATH/bin
-
 # Add Ruby gems bin directory to PATH
 export PATH=$PATH:/home/user/.gem/ruby/2.6.0/bin
 
