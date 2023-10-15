@@ -11,7 +11,5 @@ return require('packer').startup(function()
 
   use 'vim-syntastic/syntastic'
 
-  use 'rust-lang/rust.vim'
-
   use {'neoclide/coc.nvim', branch = 'release'}
 end)
