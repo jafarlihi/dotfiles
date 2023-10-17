@@ -20,9 +20,9 @@ git
 # Monitoring
 lm_sensors
 upower
-#wireshark-qt
-#vnstat
-#rkhunter
+wireshark-qt
+vnstat
+rkhunter
 
 # Audio
 pulseaudio
@@ -46,7 +46,7 @@ scrot
 parcellite
 clipmenu
 #guake
-#cool-retro-term
+cool-retro-term
 xautolock
 #xdotool
 alacritty
@@ -66,6 +66,7 @@ httpie
 #conntrack-tools
 #bridge-utils
 nmap
+netcat
 
 # Virtualization
 #docker
@@ -110,7 +111,7 @@ zathura-djvu
 zathura-pdf-mupdf
 zathura-ps
 weechat
-#aria2
+aria2
 #newsboat
 vimiv
 #sxiv
@@ -118,8 +119,6 @@ vimiv
 #exiv2
 #fish
 #bc
-#mpv # Media player required by the mps-youtube
-#mps-youtube
 #firefox
 #luakit
 #w3m # Ranger uses w3mimgdisplay for image previews
