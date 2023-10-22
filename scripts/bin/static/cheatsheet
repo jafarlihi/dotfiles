@@ -24,3 +24,6 @@ curl "https://api.github.com/$CNTX/$NAME/repos?page=$PAGE&per_page=100" |
 
 # Forget gpg passwords in cache
 gpgconf --reload gpg-agent
+
+sudo systemctl disable --now systemd-resolved
+sudo systemctl disable --now systemd-networkd

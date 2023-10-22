@@ -67,6 +67,7 @@ httpie
 #bridge-utils
 nmap
 netcat
+dhcpcd
 
 # Virtualization
 #docker
@@ -119,7 +120,7 @@ vimiv
 #exiv2
 #fish
 #bc
-#firefox
+firefox
 #luakit
 #w3m # Ranger uses w3mimgdisplay for image previews
 #qutebrowser
