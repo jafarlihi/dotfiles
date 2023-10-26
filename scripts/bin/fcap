@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-http -f POST https://wifi-virtual.azercell.com/login.html username=censored password=censored buttonClicked=4 err_flag=0 err_msg= info_flag=0 info_msg= redirect_url=http://google.com network_name="Guest Network"
-
