@@ -93,7 +93,7 @@ alias e='emacsclient -t'
 alias p='pulsemixer'
 alias r='ranger'
 alias f='fish'
-alias sus='echo deep | sudo tee /sys/power/mem_sleep && sudo systemctl suspend; slock'
+alias sus='echo deep | sudo tee /sys/power/mem_sleep && sudo systemctl suspend && pkill obs && sleep 3 && slock'
 alias hib='sudo systemctl hibernate; slock'
 alias syu='sudo pacman -Syu && sudo rkhunter --propupd'
 alias pacref='sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist'
@@ -113,6 +113,8 @@ alias gitcensor='git config --global user.email email@gmail.com && git config --
 # Network aliases
 alias fw='sudo iptables -vL -t filter'
 alias fwnat='sudo iptables -vL -t nat'
+alias fw6='sudo ip6tables -vL -t filter'
+alias fw6nat='sudo ip6tables -vL -t nat'
 alias conn='watch ss -atun'
 alias connfd='sudo watch lsof -i'
 alias trafcap='mkdir -p ~/capture && tshark -P -w ~/capture/cap.pcap'
@@ -205,3 +207,13 @@ function binToHex() {
 #. /home/user/toolchains/env.bash
 
 export NO_AT_BRIDGE=1
+
+export PATH=$PATH:/home/user/.local/bin
+
+function runxtimes() {
+  number=$1
+  shift
+  for i in `seq $number`; do
+    $@
+  done
+}

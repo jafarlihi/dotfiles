@@ -46,7 +46,7 @@ scrot
 parcellite
 clipmenu
 #guake
-cool-retro-term
+#cool-retro-term
 xautolock
 #xdotool
 alacritty
@@ -99,20 +99,20 @@ fzf
 #the_silver_searcher
 ranger
 highlight # Used by Ranger for code highlighting in previews
-thunar
+#thunar
 #tumbler # Generates thumbnails, used by Thunar for previews
 #gvfs-mtp
 #tmux
 #termite
 #tilda
 #ccze
-zathura
-zathura-djvu
+#zathura
+#zathura-djvu
 #zathura-pdf-poppler
-zathura-pdf-mupdf
-zathura-ps
-weechat
-aria2
+#zathura-pdf-mupdf
+#zathura-ps
+#weechat
+#aria2
 #newsboat
 vimiv
 #sxiv
@@ -127,7 +127,7 @@ firefox
 #gnumeric # Comes with ssconvert utility that can convert xlsx to csv, etc.
 xclip # Used by xclip.el to make Emacs use the X clipboard
 #ttf-linux-libertine
-noto-fonts
+#noto-fonts
 #ttf-liberation
 #at
 #conky

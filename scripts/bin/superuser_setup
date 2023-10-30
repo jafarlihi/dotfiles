@@ -16,7 +16,7 @@ function install_packages {
     pacman -S --needed $package_list
 }
 
-function install_default_firewall {
+function install_default_ipv4_firewall {
     iptables -P INPUT DROP
     iptables -P FORWARD DROP
     iptables -P OUTPUT ACCEPT
@@ -35,6 +35,16 @@ function install_default_firewall {
     iptables-save -f /etc/iptables/iptables.rules
 
     systemctl enable iptables
+    systemctl start iptables
+}
+
+function install_default_ipv6_firewall {
+    # TODO
+
+    ip6tables-save -f /etc/iptables/ip6tables.rules
+
+    systemctl enable --now iptables
+    systemctl enable --now ip6tables
     systemctl start iptables
 }
 
@@ -135,7 +145,7 @@ do
             install_packages ./static/arch_packages
             ;;
         2)
-            install_default_firewall
+            install_default_ipv4_firewall
             ;;
         3)
             enable_ipv4_forwarding
