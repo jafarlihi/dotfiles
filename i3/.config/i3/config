@@ -303,5 +303,5 @@ exec --no-startup-id xautolock -time 30 -locker 'slock'
 exec --no-startup-id conky
 exec --no-startup-id connmap.exe
 exec --no-startup-id guake
-exec --no-startup-id keynav
+exec --no-startup-id keynav 'grid-nav on'
 #exec --no-startup-id emacs --daemon

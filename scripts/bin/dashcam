@@ -1,0 +1,1 @@
+obs --startrecording --disable-missing-files-check --minimize-to-tray
