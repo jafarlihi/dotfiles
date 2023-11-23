@@ -1,0 +1,2 @@
+xmodmap -e "keycode 118 = Delete"
+xmodmap -e "keycode 119 = Insert"

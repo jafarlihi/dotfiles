@@ -1,0 +1,2 @@
+xmodmap -e "keycode 105 = Num_Lock"
+xmodmap -e "keycode 77 = Control_R"
