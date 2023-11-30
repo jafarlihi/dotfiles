@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo `xclip -o` > /home/user/shared/clipboard
