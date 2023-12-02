@@ -22,6 +22,7 @@ lm_sensors
 upower
 wireshark-qt
 vnstat
+iotop
 rkhunter
 
 # Audio
