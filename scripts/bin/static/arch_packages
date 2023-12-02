@@ -1,6 +1,6 @@
 # Essentials
 stow
-#gvim # gvim instead of vim because it has +clipboard
+gvim # gvim instead of vim because it has +clipboard
 #emacs
 bash-completion
 tree
@@ -88,7 +88,7 @@ cloc
 #go
 
 # Other
-chromium
+#chromium
 lesspipe
 gparted
 dosfstools
@@ -112,7 +112,7 @@ highlight # Used by Ranger for code highlighting in previews
 #zathura-pdf-mupdf
 #zathura-ps
 #weechat
-#aria2
+aria2
 #newsboat
 vimiv
 #sxiv

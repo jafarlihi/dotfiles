@@ -75,7 +75,7 @@ alias weather='curl wttr.in/Baku'
 alias magnet2torrent='aria2c -d ./ --bt-metadata-only=true --bt-save-metadata=true --listen-port=6881 `cat torrent.magnet`'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias cscoperec="find ./ -type f \( -name '*.c' -o -name '*.h' \) > ./cscope.files && cscope -b -q -k"
-alias fixpad="sudo modprobe psmouse -r; sudo modprobe psmouse"
+#alias fixpad="sudo modprobe psmouse -r; sudo modprobe psmouse"
 
 # ls aliases
 alias ls='ls --color=auto'
