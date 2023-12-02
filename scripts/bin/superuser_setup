@@ -81,6 +81,14 @@ function hide_grub_menu {
     grub-mkconfig -o /boot/grub/grub.cfg
 }
 
+function disable_resolved {
+    systemctl disable --now systemd-resolved
+}
+
+function fix_dns {
+    echo 'nameserver 8.8.8.8' > /etc/resolved.conf
+}
+
 function install_x240_trackpoint_udev_rules {
     echo 'SUBSYSTEM=="serio", DRIVERS=="psmouse", ACTION=="change", ENV{SERIO_TYPE}=="05", ATTR{press_to_select}="1", ATTR{sensitivity}="196", ATTR{speed}="255", ATTR{inertia}="4"' > /etc/udev/rules.d/10-trackpoint.rules
 }
@@ -135,7 +143,9 @@ options=(1 "Install packages" off
 6 "Create 2GB swapfile" off
 7 "Hide GRUB menu" off
 8 "Install x240 trackpoiunt udev rules" off
-9 "Install x240 libinput config" off)
+9 "Install x240 libinput config" off
+10 "Disable systemd-resolved" off
+11 "Fix DNS" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -168,6 +178,12 @@ do
             ;;
         9)
             install_x240_libinput_config
+            ;;
+        10)
+            disable_resolved
+            ;;
+        11)
+            fix_dns
             ;;
     esac
 done
