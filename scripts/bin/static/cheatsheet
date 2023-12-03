@@ -9,7 +9,7 @@
 # Apply fixes [TODO: Script this]
 # Get one of the browsers and apply extensions/patches [TODO: Script this]
 ## vms
-# Apply the clean KVM images and configs for Ubuntu and the rest
+# Apply the clean KVM images and configs for Ubuntu and the rest [TODO: Backup configs]
 ## ?
 ## Profit?
 
