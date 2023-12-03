@@ -5,6 +5,7 @@ gvim # gvim instead of vim because it has +clipboard
 bash-completion
 tree
 htop
+btop
 lsof
 curl
 wget
