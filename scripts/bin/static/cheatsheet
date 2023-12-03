@@ -1,3 +1,20 @@
+### Setup checklist
+## archinstall [TODO: Script this]
+# Verify safe installation media + update keys
+# TODO: Persist archinstall configs
+## packages
+# Clean up arch_packages and run `sudo ./superuser_setup`
+## fixes
+# Pick stuff from `superuser_setup`
+# Apply fixes [TODO: Script this]
+# Get one of the browsers and apply extensions/patches [TODO: Script this]
+## vms
+# Apply the clean KVM images and configs for Ubuntu and the rest
+## ?
+## Profit?
+
+___
+
 # vim: ft=sh
 # Create qcow2
 sudo qemu-img create -f qcow2 archvm.qcow2 60G
