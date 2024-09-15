@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+sudo dhcpcd wlan0
+sudo pkill dhcpcd

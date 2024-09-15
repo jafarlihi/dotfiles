@@ -1,0 +1,43 @@
+{
+    "additional-repositories": [],
+    "archinstall-language": "English",
+    "audio_config": {
+        "audio": "pulseaudio"
+    },
+    "bootloader": "Systemd-boot",
+    "config_version": "2.8.6",
+    "debug": false,
+    "hostname": "hostname",
+    "kernels": [
+        "linux"
+    ],
+    "locale_config": {
+        "kb_layout": "us",
+        "sys_enc": "UTF-8",
+        "sys_lang": "en_US"
+    },
+    "network_config": {
+        "type": "iso"
+    },
+    "no_pkg_lookups": false,
+    "ntp": true,
+    "offline": false,
+    "packages": [
+        "neovim",
+        "git",
+        "iwd",
+        "dialog",
+        "stow",
+        "dhcpcd",
+        "openssh"
+    ],
+    "parallel downloads": 0,
+    "script": "guided",
+    "silent": false,
+    "skip_ntp": false,
+    "skip_version_check": false,
+    "swap": true,
+    "timezone": "Asia/Baku",
+    "uki": false,
+    "version": "2.8.6"
+}
