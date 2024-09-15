@@ -2,17 +2,17 @@
 
 sudo ./scripts/disablelisteners
 sudo ./scripts/killbt
-sudo ./disableip6
-sudo ./setupfw4
-sudo ./enablefwd4
-sudo ./fixdns
-sudo ./fixlid
-sudo ./fixpad
-./installpackages
+sudo ./scripts/disableip6
+sudo ./scripts/setupfw4
+sudo ./scripts/enablefwd4
+sudo ./scripts/fixdns
+sudo ./scripts/fixlid
+sudo ./scripts/fixpad
+./scripts/installpackages
 rm ~/.bashrc
 rm ~/.bash_profile
-./restow
-./enablesec
+./scripts/restow
+./scripts/enablesec
 ln -s dotfiles/scripts ~/bin
 ln -s /var/lib/libvirt/images ~/kvm
 sudo chown -R root:root dotfiles/scripts
