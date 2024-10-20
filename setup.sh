@@ -12,10 +12,11 @@ sudo ./scripts/fixpad
 rm ~/.bashrc
 rm ~/.bash_profile
 ./scripts/restow
-./scripts/enablesec
+./scripts/enablesec # su root
 ln -s dotfiles/scripts ~/bin
 ln -s /var/lib/libvirt/images ~/kvm
 sudo chown -R root:root dotfiles/scripts
+sudo chown -R root:root ~/bin
 EDITOR=nvim sudo visudo
 sudo cp ./static/resolvconf.conf /etc/.
 sudo resolvconf -u
