@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+function initialize_pat {
+  iptables -t nat -A POSTROUTING -s "$2" -d 224.0.0.0/24 -j RETURN
+  iptables -t nat -A POSTROUTING -s "$2" -d 255.255.255.255/32 -j RETURN
+  iptables -t nat -A POSTROUTING -s "$2" ! -d "$2" -p tcp -j MASQUERADE --to-ports 1024-65535
+  iptables -t nat -A POSTROUTING -s "$2" ! -d "$2" -p udp -j MASQUERADE --to-ports 1024-65535
+  iptables -t nat -A POSTROUTING -s "$2" ! -d "$2" -j MASQUERADE
+
+  iptables -A FORWARD -d "$2" -o "$1" -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  iptables -A FORWARD -s "$2" -i "$1" -j ACCEPT
+  iptables -A FORWARD -i "$1" -o "$1" -j ACCEPT
+  iptables -A FORWARD -i "$1" -j REJECT --reject-with icmp-port-unreachable
+  iptables -A FORWARD -o "$1" -j REJECT --reject-with icmp-port-unreachable
+}
+
+function disable_pat {
+  iptables -t nat -D POSTROUTING -s "$2" -d 224.0.0.0/24 -j RETURN
+  iptables -t nat -D POSTROUTING -s "$2" -d 255.255.255.255/32 -j RETURN
+  iptables -t nat -D POSTROUTING -s "$2" ! -d "$2" -p tcp -j MASQUERADE --to-ports 1024-65535
+  iptables -t nat -D POSTROUTING -s "$2" ! -d "$2" -p udp -j MASQUERADE --to-ports 1024-65535
+  iptables -t nat -D POSTROUTING -s "$2" ! -d "$2" -j MASQUERADE
+
+  iptables -D FORWARD -d "$2" -o "$1" -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  iptables -D FORWARD -s "$2" -i "$1" -j ACCEPT
+  iptables -D FORWARD -i "$1" -o "$1" -j ACCEPT
+  iptables -D FORWARD -i "$1" -j REJECT --reject-with icmp-port-unreachable
+  iptables -D FORWARD -o "$1" -j REJECT --reject-with icmp-port-unreachable
+}
+
+read -p 'Enable or disable? (1 for enable, 0 for disable): ' optype
+
+PS3='PAT target? '
+options=('Custom device' 'Virtual machines' 'Docker containers')
+select opt in "${options[@]}"
+do
+  case $opt in
+    'Custom device')
+      target='custom'
+      break
+      ;;
+    'Virtual machines')
+      target='vm'
+      break
+      ;;
+    'Docker containers')
+      target='docker'
+      break
+      ;;
+    *) echo "Invalid option $REPLY";;
+  esac
+done
+
+if [ "$target" == 'custom' ]; then
+  read -p 'Device? (e.g. enp0s25): ' device
+  read -p 'Address? (e.g. 192.168.66.0/24): ' address
+  if [ "$optype" == '1' ]; then
+    initialize_pat "$device" "$address"
+  else
+    disable_pat "$device" "$address"
+  fi
+elif [ "$target" == 'vm' ]; then
+  if [ "$optype" == '1' ]; then
+    initialize_pat 'virbr10' '192.168.23.0/24'
+  else
+    disable_pat "virbr10" "192.168.23.0/24"
+  fi
+elif [ "$target" == 'docker' ]; then
+  if [ "$optype" == '1' ]; then
+    initialize_pat "docker0" "172.17.0.0/24"
+  else
+    disable_pat "docker0" "172.17.0.0/24"
+  fi
+fi
+
+exit 0

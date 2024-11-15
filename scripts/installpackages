@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+function install_packages {
+  local package_list=$(sed -e 's/\s*#.*$//' -e '/^\s*$/d' "$1")
+  sudo pacman -S --needed $package_list
+}
+
+install_packages ${HOME}/dotfiles/static/arch_packages

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+docker_daemonjson_rules='{
+  "iptables": false
+}'
+
+mkdir -p /etc/docker
+touch /etc/docker/daemon.json
+echo $docker_daemonjson_rules > /etc/docker/daemon.json || { echo >&2 'Failed to echo rules into daemon.json'; exit 3; }
+
+systemctl start docker || { echo >&2 'Failed to start docker.service'; exit 4; }
+iptables -D FORWARD -j DOCKER-USER
+iptables -F DOCKER-USER
+iptables -X DOCKER-USER
+
+exit 0

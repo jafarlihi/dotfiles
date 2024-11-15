@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# TODO: Add option to use 3D OpenGL acceleration
+
+ln -s /var/lib/libvirt/images ${HOME}/vm
+cd ${HOME}/vm
+
+read -p "Domain name? " name
+read -p "Install image? ('none' for no install) " iso
+if [ "$iso" = "none" ]; then
+  read -p "Disk image? " disk
+else
+  read -p "Disk space? (in G) " space
+fi
+read -p "OS variant? (run 'osinfo-query os') " os
+read -p "RAM? (in M) " ram
+read -p "CPU? (e.g. host-passthrough) " cpu
+read -p "CPU socket count? " socket
+read -p "CPU core count? " core
+read -p "CPU thread per core count? " thread
+read -p "Network interface? (e.g. virbr10) " netif
+
+if [ "$iso" == "none" ]; then
+  sudo chown nobody:kvm ${disk}
+
+  sudo virt-install --name ${name} --os-variant=${os} --ram=${ram} --cpu ${cpu} --vcpus sockets=${socket},cores=${core},threads=${thread} --disk /var/lib/libvirt/images/${disk},format=qcow2,bus=virtio --graphics spice --import --network bridge:${netif}
+else
+  sudo qemu-img create -f qcow2 ${name}.qcow2 500G
+  sudo chown nobody:kvm ${name}.qcow2
+  sudo chown nobody:kvm ${iso}
+
+  sudo virt-install --name ${name} --os-variant=${os} --ram=${ram} --cpu ${cpu} --vcpus sockets=${socket},cores=${core},threads=${thread} --disk /var/lib/libvirt/images/${name}.qcow2,format=qcow2,bus=virtio --graphics spice --cdrom /var/lib/libvirt/images/${iso} --network bridge:${netif}
+fi

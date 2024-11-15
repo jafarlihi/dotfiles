@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+function enable_ipv4_forwarding {
+  echo 'net.ipv4.ip_forward=1' > /etc/sysctl.d/70-ipv4_forward.conf
+  echo 'net.ipv4.conf.all.forwarding=1' >> /etc/sysctl.d/70-ipv4_forward.conf
+  sysctl --system
+}
+
+enable_ipv4_forwarding
