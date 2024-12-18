@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ ! $# -eq 1 ]]; then
+  printf >&2 'usage: %s [executable]\n' "${0##*/}"
+  exit 3
+fi
+
+mkdir -p /tmp/dockrun
+cp $1 /tmp/dockrun/.
+docker run -it -v /tmp/dockrun:/home archlinux/base ./home/$(basename $1)
+
+exit 0

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+echo '' > /etc/libvirt/qemu/networks/default.xml
+echo '' > /etc/libvirt/qemu/networks/autostart/default.xml
+
+iptables-save > /tmp/iptables-save
+
+systemctl start libvirtd || { echo >&2 'Failed to start libvirtd.service'; exit 3; }
+systemctl start virtlogd || { echo >&2 'Failed to start virtlogd.service'; exit 4; }
+
+mac=$(printf '00:60:2F:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256])
+
+ip link add virbr10-dummy address ${mac} type dummy || { echo >&2 'Failed to create a dummy interface'; }
+brctl addbr virbr10 || { echo >&2 'Failed to add bridge'; }
+brctl stp virbr10 on || { echo >&2 'Failed to enable STP on bridge'; }
+brctl addif virbr10 virbr10-dummy || { echo >&2 'Failed to add the dummy interface to bridge'; }
+ip address add 192.168.23.1/24 dev virbr10 broadcast 192.168.23.255 || { echo >&2 'Failed to set IP on bridge'; }
+
+ip link set virbr10 up || { echo >&2 'Failed to bring the bridge up'; }
+#ip link set vnet0 up
+
+sleep 1
+iptables-restore /tmp/iptables-save
+
+exit 0

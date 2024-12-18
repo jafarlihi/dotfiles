@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+printf '%s\n' '[Login]
+HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+HandleLidSwitchDocked=ignore' | sudo tee /etc/systemd/logind.conf

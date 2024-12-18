@@ -1,0 +1,169 @@
+set $mod Mod1
+set $mod2 Mod4
+
+font pango:Monospace 7.5
+
+floating_modifier $mod
+
+bindsym $mod+Return exec alacritty
+bindsym $mod+$mod2+Return exec urxvt
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+d exec dmenu_run
+bindsym $mod+c exec clipmenu
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit' && pkill -f clipmenud"
+
+mode "resize" {
+  bindsym j resize shrink width 5 px or 5 ppt
+    bindsym k resize grow height 5 px or 5 ppt
+    bindsym l resize shrink height 5 px or 5 ppt
+    bindsym semicolon resize grow width 5 px or 5 ppt
+    bindsym Left resize shrink width 5 px or 5 ppt
+    bindsym Down resize grow height 5 px or 5 ppt
+    bindsym Up resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow width 5 px or 5 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+mode "mouse" {
+  set $slow 1
+    set $quick 10
+    set $fast 50
+    bindsym h exec xdotool mousemove_relative -- -$slow 0
+    bindsym j exec xdotool mousemove_relative 0 $slow
+    bindsym k exec xdotool mousemove_relative -- 0 -$slow
+    bindsym l exec xdotool mousemove_relative $slow 0
+    bindsym Left exec xdotool mousemove_relative -- -$slow 0
+    bindsym Down exec xdotool mousemove_relative 0 $slow
+    bindsym Up exec xdotool mousemove_relative -- 0 -$slow
+    bindsym Right exec xdotool mousemove_relative $slow 0
+    bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
+    bindsym Shift+j exec xdotool mousemove_relative 0 $quick
+    bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
+    bindsym Shift+l exec xdotool mousemove_relative $quick 0
+    bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
+    bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
+    bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$quick
+    bindsym Shift+Right exec xdotool mousemove_relative $quick 0
+    bindsym Shift+$mod2+h exec xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+$mod2+j exec xdotool mousemove_relative 0 $fast
+    bindsym Shift+$mod2+k exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+$mod2+l exec xdotool mousemove_relative $fast 0
+    bindsym Shift+$mod2+Left exec xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+$mod2+Down exec xdotool mousemove_relative 0 $fast
+    bindsym Shift+$mod2+Up exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+$mod2+Right exec xdotool mousemove_relative $fast 0
+    bindsym f exec xdotool click 1
+    bindsym d exec xdotool click 2
+    bindsym s exec xdotool click 3
+    bindsym Shift+f exec xdotool mousedown 1
+    bindsym Shift+d exec xdotool mousedown 2
+    bindsym Shift+s exec xdotool mousedown 3
+    bindsym $mod2+f exec xdotool mouseup 1
+    bindsym $mod2+d exec xdotool mouseup 2
+    bindsym $mod2+s exec xdotool mouseup 3
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+$mod2+Shift+m mode "mouse"
+
+bar {
+  mode hide
+    modifier $mod
+    font pango:Monospace 15
+    status_command i3status
+}
+
+for_window [class="^.*"] border pixel 1
+default_border none
+
+client.background       #ffffff
+client.focused          #ff0000 #285577 #ffffff #2e9ef4   #ff0000
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+bindsym $mod+z exec bash -c 'sleep 0.1 && slock'
+
+bindsym $mod+backslash exec firejail qutebrowser
+bindsym $mod+grave exec xcalib -i -a
+
+bindsym $mod+O workspace prev
+bindsym $mod+P workspace next
+
+exec --no-startup-id picom
+exec --no-startup-id clipmenud
+exec --no-startup-id parcellite
+exec --no-startup-id lxqt-policykit-agent
+exec --no-startup-id dunst

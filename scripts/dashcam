@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+obs --startrecording --disable-missing-files-check --minimize-to-tray

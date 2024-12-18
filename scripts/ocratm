@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+scrot -F /tmp/ocratm.png
+tesseract /tmp/ocratm.png /tmp/ocratm
+cat /tmp/ocratm.txt
+rm /tmp/ocratm.png
+rm /tmp/ocratm.txt

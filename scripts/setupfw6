@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+function install_default_ipv6_firewall {
+  ip6tables -P INPUT DROP
+  ip6tables -P FORWARD DROP
+  ip6tables -P OUTPUT ACCEPT
+  ip6tables -N TCP
+  ip6tables -N UDP
+  ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  ip6tables -A INPUT -i lo -j ACCEPT
+  ip6tables -A INPUT -m conntrack --ctstate INVALID -j DROP
+  ip6tables -A INPUT -s fe80::/10 -p ipv6-icmp -j ACCEPT
+  ip6tables -A INPUT -p udp -m conntrack --ctstate NEW -j UDP
+  ip6tables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j TCP
+  ip6tables -A INPUT -p udp -j REJECT --reject-with icmp6-adm-prohibited
+  ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
+  ip6tables -A INPUT -j REJECT --reject-with icmp6-adm-prohibited
+  ip6tables -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128 -m conntrack --ctstate NEW -j ACCEPT
+
+  ip6tables-save -f /etc/iptables/ip6tables.rules
+
+  systemctl enable --now iptables
+  systemctl enable --now ip6tables
+  systemctl start iptables
+}
+
+install_default_ipv6_firewall

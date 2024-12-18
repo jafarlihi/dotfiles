@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+read -n 1 -p "User or organization? (u/o) " cntx
+
+if [[ $cntx = "u" ]]; then
+  cntx="users"
+elif [[ $cntx = "o" ]]; then
+  cntx="orgs"
+else
+  echo "error: 'u' or 'o' input was expected"
+  exit 1
+fi
+
+echo
+read -p "Username/orgname? " name
+
+read -p "Page number? " page
+
+read -p "Per page result count? " per_page
+
+curl "https://api.github.com/${cntx}/${name}/repos?page=${page}&per_page=${per_page}" |
+  grep -e 'clone_url*' |
+  cut -d \" -f 4 |
+  xargs -L1 git clone

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+command -v dialog >/dev/null 2>&1 || {
+  echo "dialog was not found"
+  sudo pacman -S dialog || { echo >&2 "can't run without dialog"; exit 3; }
+}
+
+cd ${HOME}/dotfiles/configs
+packages=($(ls -d */))
+
+options=()
+counter=1
+for package in "${packages[@]}"; do
+  options+=("$counter")
+  options+=("$package")
+  options+=('on')
+  counter=$((counter + 1))
+done
+
+cmd=(dialog --separate-output --checklist "Select options:" 50 70 40)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices; do
+  selected_package="${packages[$(( ${choice} - 1 ))]}"
+  echo "Running stow for $selected_package"
+  stow "$selected_package" -t ${HOME}
+done
+
+exit 0

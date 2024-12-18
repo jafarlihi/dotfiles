@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+sudo systemctl enable --now auditd.service
+sudo systemctl enable --now apparmor.service
+
+kernel_params="audit=1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf"
+params_to_add="options $kernel_params"
+
+find /boot/loader/entries -type f -name '*.conf' ! -name '*fallback*' | while read -r conf_file; do
+    if grep -q "^options " "$conf_file"; then
+        if ! grep -q "$kernel_params" "$conf_file"; then
+            sed -i "/^options / s/$/ $kernel_params/" "$conf_file"
+        fi
+    else
+        echo "$params_to_add" >> "$conf_file"
+    fi
+done

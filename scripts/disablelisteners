@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo systemctl disable --now systemd-networkd.socket
+sudo systemctl disable --now systemd-networkd
+sudo systemctl disable --now systemd-resolved

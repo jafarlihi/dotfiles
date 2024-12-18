@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ ! $# -eq 2 ]]; then
+  printf >&2 'usage: %s [port] [ip]\n' "${0##*/}"
+  printf >&2 'example: %s 8000 192.168.66.0/24\n' "${0##*/}"
+  exit 3
+fi
+
+iptables -D TCP -p tcp --dport "$1" -s "$2" -j ACCEPT
+exit 0

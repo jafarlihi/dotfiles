@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+gpgconf --reload gpg-agent
